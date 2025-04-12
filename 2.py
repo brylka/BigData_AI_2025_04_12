@@ -33,6 +33,7 @@ def index():
     if request.method == 'POST':
 
         user_prompt = request.form.get('prompt')
+        model = request.form.get('model', 'gpt-4o')
         if request.form.get('messages'):
             messages = json.loads(request.form.get('messages'))
 
@@ -41,13 +42,16 @@ def index():
         mess = [{"role": "developer", "content": preprompt}]
         mess.extend(messages)
         response = client.chat.completions.create(
-            model="gpt-4o",
+            model=model,
             messages=mess
         )
 
         assistant_response = response.choices[0].message.content
         messages.append({"role": "assistant", "content": assistant_response})
-    return render_template('2.html', messages=messages, messages_json=json.dumps(messages))
+
+    models = ['gpt-4o', 'gpt-3.5-turbo', 'gpt-4.5-preview']
+
+    return render_template('2.html', models=models, messages=messages, messages_json=json.dumps(messages))
 
 @app.route('/ocr', methods=['GET', 'POST'])
 def ocr():
