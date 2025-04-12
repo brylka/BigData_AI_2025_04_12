@@ -10,5 +10,10 @@
         <input type="file" name="image" accept="image/jpeg" required>
         <button type="submit">Prześlij obrazek i wykonaj OCR</button>
     </form>
+
+    {% if ocr_text %}
+        <p>{{ ocr_text }}</p>
+    {% endif %}
+
 </body>
 </html>

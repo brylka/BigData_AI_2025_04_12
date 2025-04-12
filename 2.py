@@ -1,3 +1,4 @@
+import base64
 import json
 
 from flask import Flask, render_template, request
@@ -50,12 +51,33 @@ def index():
 
 @app.route('/ocr', methods=['GET', 'POST'])
 def ocr():
+
+    assistant_response = ""
+
     if request.method == 'POST':
         file = request.files['image']
-        file.save('plik_otrzymany.jpg')
+        #file.save('plik_otrzymany.jpg')
+
+        file_content = file.read()
+        base64_image = base64.b64encode(file_content).decode('utf-8')
+
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": "Wykonaj OCR na tym pliku. Wypisz cały tekst, który jest widoczny na obrazku."},
+                        {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{base64_image}"}}
+                    ]
+                }
+            ]
+        )
+
+        assistant_response = response.choices[0].message.content
 
 
-    return render_template("ocr.html")
+    return render_template("ocr.html", ocr_text=assistant_response)
 
 
 if __name__ == '__main__':
