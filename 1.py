@@ -6,14 +6,14 @@ def get_api_key():
 
 client = OpenAI(api_key=get_api_key())
 
-user_prompt = "Cześć!"
+while True:
+  user_prompt = input("Prompt: ")
 
+  response = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[
+      {"role": "user", "content": user_prompt}
+    ]
+  )
 
-response = client.chat.completions.create(
-  model="gpt-4o",
-  messages=[
-    {"role": "user", "content": user_prompt}
-  ]
-)
-
-print(response.choices[0].message.content)
+  print(response.choices[0].message.content)
