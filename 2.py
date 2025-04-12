@@ -48,6 +48,15 @@ def index():
         messages.append({"role": "assistant", "content": assistant_response})
     return render_template('2.html', messages=messages, messages_json=json.dumps(messages))
 
+@app.route('/ocr', methods=['GET', 'POST'])
+def ocr():
+    if request.method == 'POST':
+        file = request.files['image']
+        file.save('plik_otrzymany.jpg')
+
+
+    return render_template("ocr.html")
+
 
 if __name__ == '__main__':
     app.run(debug=True)
