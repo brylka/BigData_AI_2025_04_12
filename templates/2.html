@@ -8,6 +8,7 @@
     <h1>Mój ChatGPT</h1>
     <p>{{ response }}</p>
     <form method="POST">
+        <input type="hidden" name="messages" value="{{ messages }}">
         <input type="text" name="prompt" placeholder="Wpisz prompta..." required>
         <button type="submit">Wyślij</button>
     </form>
