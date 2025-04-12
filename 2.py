@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from openai import OpenAI
 
 def get_api_key():
@@ -7,20 +7,19 @@ def get_api_key():
 
 client = OpenAI(api_key=get_api_key())
 
-user_prompt = "Cześć! Nazywam się Tomasz!"
-
-response = client.chat.completions.create(
-    model="gpt-4o",
-    messages=[{"role": "user", "content": user_prompt}]
-)
-
-assistant_response = response.choices[0].message.content
-
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return assistant_response
+    user_prompt = "Cześć! Nazywam się Tomasz!"
+
+    response = client.chat.completions.create(
+        model="gpt-4o",
+        messages=[{"role": "user", "content": user_prompt}]
+    )
+
+    assistant_response = response.choices[0].message.content
+    return render_template('2.html')
 
 
 if __name__ == '__main__':
