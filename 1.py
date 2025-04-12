@@ -5,15 +5,17 @@ def get_api_key():
     return f.read().strip()
 
 client = OpenAI(api_key=get_api_key())
+messages = []
 
 while True:
   user_prompt = input("Prompt: ")
+  messages.append({"role": "user", "content": user_prompt})
 
   response = client.chat.completions.create(
-    model="gpt-3.5-turbo",
-    messages=[
-      {"role": "user", "content": user_prompt}
-    ]
+    model="gpt-4o",
+    messages=messages
   )
-
-  print(response.choices[0].message.content)
+  assistant_response = response.choices[0].message.content
+  messages.append({"role": "assistant", "content": assistant_response})
+  print(assistant_response)
+  print("\n",messages,"\n")
