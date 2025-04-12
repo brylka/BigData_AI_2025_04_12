@@ -32,7 +32,7 @@ def index():
 
         assistant_response = response.choices[0].message.content
         messages.append({"role": "assistant", "content": assistant_response})
-    return render_template('2.html', response=assistant_response, messages=json.dumps(messages))
+    return render_template('2.html', messages=messages, messages_json=json.dumps(messages))
 
 
 if __name__ == '__main__':

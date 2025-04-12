@@ -6,9 +6,17 @@
 </head>
 <body>
     <h1>Mój ChatGPT</h1>
-    <p>{{ response }}</p>
+    {% for message in messages %}
+        <p>
+        {% if message.role == 'user' %}
+            <b>Ty</b>
+        {% else %}
+            <b>ChatGPT</b>
+        {% endif %}
+        : {{ message.content }}</p>
+    {% endfor %}
     <form method="POST">
-        <input type="hidden" name="messages" value="{{ messages }}">
+        <input type="hidden" name="messages" value="{{ messages_json }}">
         <input type="text" name="prompt" placeholder="Wpisz prompta..." required>
         <button type="submit">Wyślij</button>
     </form>
