@@ -1,6 +1,8 @@
 # Importowanie bibliotek numpy, pandas, matplotlib.pyplot oraz seaborn
 import numpy as np
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -66,7 +68,7 @@ plt.xlabel('Predicted')
 plt.ylabel('Actual')
 plt.title('Confusion Matrix')
 plt.savefig('confusion_matrix.png')
-plt.show()
+#plt.show()
 
 # Nowa transakcja
 new_transaction = pd.DataFrame({
