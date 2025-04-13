@@ -17,7 +17,23 @@ def index():
 
         img_array = np.array(img) # Przekształcamy obraz do wektora
 
-        print(img_array)
+        binary_image = (img_array <= 127).astype(int)
+
+        # Wyświetla cyfrę 0 i 1
+        print("\nReprezentacja binarna (0 i 1):")
+        for row in binary_image:
+            print(' '.join(map(str, row)))
+
+        # Wyświetlanie cyfry w bardziej czytelnej formie
+        print("\nWizualizacja w terminalu (# dla 1, spacja dla 0):")
+        for row in binary_image:
+            line = ''
+            for pixel in row:
+                if pixel == 1:
+                    line += '#'
+                else:
+                    line += ' '
+            print(line)
 
     return render_template('digit.html')
 
