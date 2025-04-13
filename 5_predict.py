@@ -10,7 +10,7 @@ scaler = joblib.load('scaler.pkl')
 
 # Nowa nieruchomość, dla której chcemy oszacować cenę
 new_property = {
-    'MedInc': 18.32,
+    'MedInc': 8.32,
     'HouseAge': 25,
     'AveRooms': 6.23,
     'AveBedrms': 1.01,
