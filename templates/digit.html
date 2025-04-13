@@ -13,7 +13,9 @@
 </form>
 
 <div>
-    <!-- tu będą wyniki -->
+    {% if prediction != None %}
+        Rozpoznana cyfra: {{ prediction }}
+    {% endif %}
 </div>
 
 </body>

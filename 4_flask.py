@@ -9,6 +9,7 @@ model = joblib.load('mnist_model.pkl')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    prediction = None
     if request.method == ('POST'):
         file = request.files['file'] # Odbieramy plik
 
@@ -19,23 +20,27 @@ def index():
 
         binary_image = (img_array <= 127).astype(int)
 
-        # Wyświetla cyfrę 0 i 1
-        print("\nReprezentacja binarna (0 i 1):")
-        for row in binary_image:
-            print(' '.join(map(str, row)))
+        # # Wyświetla cyfrę 0 i 1
+        # print("\nReprezentacja binarna (0 i 1):")
+        # for row in binary_image:
+        #     print(' '.join(map(str, row)))
+        #
+        # # Wyświetlanie cyfry w bardziej czytelnej formie
+        # print("\nWizualizacja w terminalu (# dla 1, spacja dla 0):")
+        # for row in binary_image:
+        #     line = ''
+        #     for pixel in row:
+        #         if pixel == 1:
+        #             line += '#'
+        #         else:
+        #             line += ' '
+        #     print(line)
 
-        # Wyświetlanie cyfry w bardziej czytelnej formie
-        print("\nWizualizacja w terminalu (# dla 1, spacja dla 0):")
-        for row in binary_image:
-            line = ''
-            for pixel in row:
-                if pixel == 1:
-                    line += '#'
-                else:
-                    line += ' '
-            print(line)
+        img_vector = (255 - img_array).reshape(1,-1) / 255.0
 
-    return render_template('digit.html')
+        prediction = model.predict(img_vector)[0]
+
+    return render_template('digit.html', prediction=prediction)
 
 if __name__ == '__main__':
     app.run(debug=True)
