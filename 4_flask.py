@@ -36,8 +36,10 @@ def index():
         #             line += ' '
         #     print(line)
 
+        # Przekształć obraz do wektora dla modelu
         img_vector = (255 - img_array).reshape(1,-1) / 255.0
 
+        # Przewidywanie cyfry
         prediction = model.predict(img_vector)[0]
 
     return render_template('digit.html', prediction=prediction)
